@@ -25,6 +25,17 @@ function shuffle(array) {
     return array;
 }
 
+var cards = document.getElementsByClassName("card");
+
+function turnCard() {
+	var card = this.classList.add("open", "show");
+	return card
+}
+
+
+for (var i = 0; i < cards.length; i++) {
+    cards[i].addEventListener('click', turnCard, false);
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
