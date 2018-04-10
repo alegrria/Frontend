@@ -1,5 +1,5 @@
 //Create a list that holds all of your cards
-let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+let items = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -17,36 +17,28 @@ function shuffle(array) {
     return array;
 }
 
+let openCards = [];
+let moveCounter = 0;
 
-let openCards = []
-const deck = document.findElementById('turnover')
-// Display the cards on the page
-// loop through each card and create its HTML
-// add each card's HTML to the page
-
-function makeCard() {
-	let cardsList = shuffle(cards);
-	cardsList.forEach(function() {
-		let card = `<li class="card"><i class="fa ${card}"></i></li>`;
-		deck.append(card);
-	})
-	}
-
-}
-
-
+let cards = document.getElementsByClassName("card")
 
 function turnCard() {
 	var card = this.classList.add("open", "show");
 	return card;
 }
 
-for (var i = 0; i < cards.length; i++) {
-    cards[i].addEventListener('click', turnCard, false);
+function addCard() {
+	if (this.classList.contains("open")) {
+	    openCards.push(this);
+	    moveCounter += 1;
+	} 
 }
 
-
-
+for (var i = 0; i < cards.length; i++) {
+	cards[i].addEventListener('click', turnCard);
+	cards[i].addEventListener('click', addCard);
+	if (moveCounter == 2)
+}
 // function addMatch() {
 // 	for (var i = 0; i < cards.length; i++) {
 //     	cards[i].addEventListener('click', turnCard, false);
