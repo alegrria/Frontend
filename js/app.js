@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
-
+var cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
 /*
  * Display the cards on the page
@@ -26,16 +26,42 @@ function shuffle(array) {
 }
 
 var cards = document.getElementsByClassName("card");
+var count = 0
+var match = []
+
 
 function turnCard() {
 	var card = this.classList.add("open", "show");
-	return card
+	return card;
 }
-
 
 for (var i = 0; i < cards.length; i++) {
     cards[i].addEventListener('click', turnCard, false);
 }
+
+
+// function addMatch() {
+// 	for (var i = 0; i < cards.length; i++) {
+//     	cards[i].addEventListener('click', turnCard, false);
+//     	match << cards[i];
+//     	count += 1;
+//     	if (count === 2) {
+//     		if (match[0] === match[1]) {
+//     			match[0].classList.remove("open", "show").add("match");
+//     			match[1].classList.remove("open", "show").add("match");
+//     			match = [];
+//     			count = 0;
+//     		} else {
+//     			match[0].classList.remove("open", "show");
+//     			match[1].classList.remove("open", "show");
+//     			match = [];
+//     			count = 0;
+//     		}
+//     	}
+//     } 
+//     return 
+// }
+	
 
 /*
  * set up the event listener for a card. If a card is clicked:
