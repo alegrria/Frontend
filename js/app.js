@@ -18,7 +18,7 @@ function shuffle(array) {
 }
 
 let openCards = [];
-let moveCounter = 0;
+let counter = 0;
 
 let cards = document.getElementsByClassName("card")
 
@@ -30,14 +30,39 @@ function turnCard() {
 function addCard() {
 	if (this.classList.contains("open")) {
 	    openCards.push(this);
-	    moveCounter += 1;
+	    counter += 1;
 	} 
+}
+
+function addMatch() {
+	if (counter === 2) {
+		if (openCards[0].childNodes[1].classList.value === openCards[1].childNodes[1].classList.value) {
+			openCards[0].classList.remove("open", "show");
+			openCards[0].classList.add("match");
+			openCards[1].classList.remove("open", "show");
+			openCards[1].classList.add("match");
+			counter = 0;
+			openCards = [];
+		}
+	}
+}
+
+function removeOpen() {
+	if (counter === 2) {
+		if (openCards[0].childNodes[1].classList.value !== openCards[1].childNodes[1].classList.value){
+			openCards[0].classList.remove("open", "show");
+			openCards[1].classList.remove("open", "show");
+			counter = 0;
+			openCards = [];
+		}	
+	}
 }
 
 for (var i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', turnCard);
 	cards[i].addEventListener('click', addCard);
-	if (moveCounter == 2)
+	cards[i].addEventListener('click', addMatch);
+	cards[i].addEventListener('click', removeOpen);
 }
 // function addMatch() {
 // 	for (var i = 0; i < cards.length; i++) {
