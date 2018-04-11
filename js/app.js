@@ -17,6 +17,19 @@ function shuffle(array) {
     return array;
 }
 
+function makeCard(items) {
+	let deck = []
+	for (var i = 0; i < items.length; i++) {
+		deck.push(`<li class="card"><i class="fa ${items[i]}"></i></li>`)
+	}
+	return deck.join(" ")
+}
+
+function startGame() {
+    items = shuffle(items);
+    turnover.innerHTML = makeCard(items);
+}
+
 let openCards = [];
 let counter = 0;
 let moveCounter = 0
@@ -38,7 +51,7 @@ function addCard() {
 
 function addMatch() {
 	if (counter === 2) {
-		if (openCards[0].childNodes[1].classList.value === openCards[1].childNodes[1].classList.value) {
+		if (openCards[0].childNodes[0].classList.value === openCards[1].childNodes[0].classList.value) {
 			openCards[0].classList.remove("open", "show");
 			openCards[0].classList.add("match");
 			openCards[1].classList.remove("open", "show");
@@ -51,7 +64,7 @@ function addMatch() {
 
 function removeOpen() {
 	if (counter === 2) {
-		if (openCards[0].childNodes[1].classList.value !== openCards[1].childNodes[1].classList.value){
+		if (openCards[0].childNodes[0].classList.value !== openCards[1].childNodes[0].classList.value){
 			setTimeout(function() {openCards[0].classList.remove("open", "show");
 			openCards[1].classList.remove("open", "show");
 			counter = 0;
@@ -63,8 +76,10 @@ function removeOpen() {
 function moveCount (){ 
 	var moves = document.querySelectorAll("span");
 	moves[0].innerHTML = moveCounter
-	console.log(moveCounter)
 }
+
+
+startGame()
 
 for (var i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', turnCard);
