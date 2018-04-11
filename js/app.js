@@ -26,8 +26,19 @@ function makeCard(items) {
 }
 
 function startGame() {
+
     items = shuffle(items);
     turnover.innerHTML = makeCard(items);
+    for (var i = 0; i < cards.length; i++) {
+		cards[i].addEventListener('click', turnCard);
+		cards[i].addEventListener('click', addCard);
+		cards[i].addEventListener('click', addMatch);
+		cards[i].addEventListener('click', turnCard);
+		cards[i].addEventListener('click', removeOpen);
+		cards[i].addEventListener('click', moveCount);
+		moveCounter = 0;
+		moveCount()
+	}
 }
 
 let openCards = [];
@@ -81,15 +92,9 @@ function moveCount (){
 
 startGame()
 
-for (var i = 0; i < cards.length; i++) {
-	cards[i].addEventListener('click', turnCard);
-	cards[i].addEventListener('click', addCard);
-	cards[i].addEventListener('click', addMatch);
-	cards[i].addEventListener('click', turnCard);
-	cards[i].addEventListener('click', removeOpen);
-	cards[i].addEventListener('click', moveCount);
-}
 
+
+document.querySelector("div.restart").addEventListener('click', startGame)
 
 
 /*
