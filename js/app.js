@@ -50,11 +50,11 @@ function addMatch() {
 function removeOpen() {
 	if (counter === 2) {
 		if (openCards[0].childNodes[1].classList.value !== openCards[1].childNodes[1].classList.value){
-			openCards[0].classList.remove("open", "show");
+			setTimeout(function() {openCards[0].classList.remove("open", "show");
 			openCards[1].classList.remove("open", "show");
 			counter = 0;
-			openCards = [];
-		}	
+			openCards = []}, 500);
+		}
 	}
 }
 
@@ -62,6 +62,7 @@ for (var i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', turnCard);
 	cards[i].addEventListener('click', addCard);
 	cards[i].addEventListener('click', addMatch);
+	cards[i].addEventListener('click', turnCard);
 	cards[i].addEventListener('click', removeOpen);
 }
 // function addMatch() {
