@@ -19,6 +19,7 @@ function shuffle(array) {
 
 let openCards = [];
 let counter = 0;
+let moveCounter = 0
 
 let cards = document.getElementsByClassName("card")
 
@@ -31,6 +32,7 @@ function addCard() {
 	if (this.classList.contains("open")) {
 	    openCards.push(this);
 	    counter += 1;
+	    moveCounter += 1;
 	} 
 }
 
@@ -58,35 +60,22 @@ function removeOpen() {
 	}
 }
 
+function moveCount (){ 
+	var moves = document.querySelectorAll("span");
+	moves[0].innerHTML = moveCounter
+	console.log(moveCounter)
+}
+
 for (var i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', turnCard);
 	cards[i].addEventListener('click', addCard);
 	cards[i].addEventListener('click', addMatch);
 	cards[i].addEventListener('click', turnCard);
 	cards[i].addEventListener('click', removeOpen);
+	cards[i].addEventListener('click', moveCount);
 }
-// function addMatch() {
-// 	for (var i = 0; i < cards.length; i++) {
-//     	cards[i].addEventListener('click', turnCard, false);
-//     	match << cards[i];
-//     	count += 1;
-//     	if (count === 2) {
-//     		if (match[0] === match[1]) {
-//     			match[0].classList.remove("open", "show").add("match");
-//     			match[1].classList.remove("open", "show").add("match");
-//     			match = [];
-//     			count = 0;
-//     		} else {
-//     			match[0].classList.remove("open", "show");
-//     			match[1].classList.remove("open", "show");
-//     			match = [];
-//     			count = 0;
-//     		}
-//     	}
-//     } 
-//     return 
-// }
-	
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
