@@ -53,12 +53,12 @@ function turnCard() {
 }
 
 function addCard() {
-	if (this.classList.contains("open")) {
+	if (this.classList.contains("open") && this !== openCards[0]) {
 	    openCards.push(this);
-	    counter += 1;
-	    moveCounter += 1;
+    	counter += 1;
+    	moveCounter += 1;
 	} 
-}
+}  
 
 function addMatch() {
 	if (counter === 2) {
