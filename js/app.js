@@ -36,6 +36,7 @@ function startGame() {
 		cards[i].addEventListener('click', turnCard);
 		cards[i].addEventListener('click', removeOpen);
 		cards[i].addEventListener('click', moveCount);
+		cards[i].addEventListener('click', checkWin);
 		moveCounter = 0;
 		moveCount()
 	}
@@ -84,9 +85,17 @@ function removeOpen() {
 	}
 }
 
-function moveCount (){ 
+function moveCount() { 
 	var moves = document.querySelectorAll("span");
 	moves[0].innerHTML = moveCounter
+}
+
+function checkWin() {
+	let matched = document.getElementsByClassName("match").length;
+	if (matched === 16) {
+		setTimeout(function() {alert('Congratulations! You won!!!11 It took you x seconds and y moves to win the game. Try once more?')}, 200)
+		moveCounter += 0;
+	}
 }
 
 
