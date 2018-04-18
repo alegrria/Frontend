@@ -36,10 +36,13 @@ function startGame() {
 		cards[i].addEventListener('click', turnCard);
 		cards[i].addEventListener('click', removeOpen);
 		cards[i].addEventListener('click', moveCount);
+		cards[i].addEventListener('click', changeRating);
 		cards[i].addEventListener('click', checkWin);
 		moveCounter = 0;
 		moveCount()
-	}
+		restoreRating()
+	};
+
 }
 
 let openCards = [];
@@ -90,19 +93,34 @@ function moveCount() {
 	moves[0].innerHTML = moveCounter
 }
 
+
 function checkWin() {
-	let matched = document.getElementsByClassName("match").length;
-	if (matched === 16) {
-		setTimeout(function() {alert('Congratulations! You won!!!11 It took you x seconds and y moves to win the game. Try once more?')}, 200)
+	let matched = document.getElementsByClassName("match");
+	let star = document.querySelectorAll('i.fa.fa-star');
+	if (matched.length === 16) {
+		setTimeout(function() {alert(`Congratulations! You won!11 It took you x seconds and ${moveCounter} moves to win the game. Your star rating is ${star.length}. Try once more?`);
+		openCards = []}, 200);
 		moveCounter += 0;
 	}
 }
 
+function changeRating() {
+	let star = document.querySelectorAll('i.fa.fa-star');
+	if (moveCounter === 20 || moveCounter === 30 || moveCounter === 40) {
+		star[0].classList.remove('fa-star');
+		star[0].classList.add('fa-star-o');
+	};
+}
 
 startGame()
 
-
-
+function restoreRating() {
+	let emptyStar = document.querySelectorAll('i.fa.fa-star-o');
+	for (var i = 0; i < emptyStar.length; i++) {
+		emptyStar[0].classList.remove('fa-star-o');
+		emptyStar[0].classList.add('fa-star');
+	};	
+}
 document.querySelector("div.restart").addEventListener('click', startGame)
 
 
