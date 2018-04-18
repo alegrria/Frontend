@@ -96,7 +96,7 @@ function removeOpen() {
 
 // count the moves which are namely cliks on cards
 function moveCount() { 
-	var moves = document.querySelectorAll("span");
+	var moves = document.querySelectorAll("span.moves");
 	moves[0].innerHTML = moveCounter
 }
 
@@ -105,10 +105,12 @@ function moveCount() {
 function checkWin() {
 	let matched = document.getElementsByClassName("match");
 	let star = document.querySelectorAll('i.fa.fa-star');
+	let time = document.getElementById('minutes').innerHTML + " minutes " + document.getElementById('seconds').innerHTML + " seconds"
 	if (matched.length === 16) {
-		setTimeout(function() {alert(`Congratulations! You won!11 It took you x seconds and ${moveCounter} moves to win the game. Your star rating is ${star.length}. Try once more?`);
+		setTimeout(function() {alert(`Congratulations! You won!11 It took you ${time} and ${moveCounter} moves to win the game. Your star rating is ${star.length}. Try once more?`);
 		openCards = []}, 200);
 		moveCounter += 0;
+		clearInterval(timer);
 	}
 }
 
@@ -132,6 +134,15 @@ function restoreRating() {
 		emptyStar[0].classList.add('fa-star');
 	};	
 }
+
+// start timer for the game
+let sec = 0;
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+let timer = setInterval( function(){
+    document.getElementById("seconds").innerHTML=pad(++sec%60);
+    document.getElementById("minutes").innerHTML=pad(parseInt(sec/60,10));
+}, 1000);
+
 
 // start new game without refreshing the browser tab
 document.querySelector("div.restart").addEventListener('click', startGame)
