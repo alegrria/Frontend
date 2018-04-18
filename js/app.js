@@ -17,6 +17,7 @@ function shuffle(array) {
     return array;
 }
 
+// Make the deck with cards
 function makeCard(items) {
 	let deck = []
 	for (var i = 0; i < items.length; i++) {
@@ -25,6 +26,7 @@ function makeCard(items) {
 	return deck.join(" ")
 }
 
+// start a new game
 function startGame() {
 
     items = shuffle(items);
@@ -51,11 +53,13 @@ let moveCounter = 0
 
 let cards = document.getElementsByClassName("card")
 
+// turn the card to see its symbol
 function turnCard() {
 	var card = this.classList.add("open", "show");
 	return card;
 }
 
+// add card to the list of open cards
 function addCard() {
 	if (this.classList.contains("open") && this !== openCards[0]) {
 	    openCards.push(this);
@@ -64,6 +68,7 @@ function addCard() {
 	} 
 }  
 
+// compare cards and leave them open if the symbols match
 function addMatch() {
 	if (counter === 2) {
 		if (openCards[0].childNodes[0].classList.value === openCards[1].childNodes[0].classList.value) {
@@ -77,6 +82,7 @@ function addMatch() {
 	}
 }
 
+// empty the open list
 function removeOpen() {
 	if (counter === 2) {
 		if (openCards[0].childNodes[0].classList.value !== openCards[1].childNodes[0].classList.value){
@@ -88,12 +94,14 @@ function removeOpen() {
 	}
 }
 
+// count the moves which are namely cliks on cards
 function moveCount() { 
 	var moves = document.querySelectorAll("span");
 	moves[0].innerHTML = moveCounter
 }
 
 
+// check if the game is over
 function checkWin() {
 	let matched = document.getElementsByClassName("match");
 	let star = document.querySelectorAll('i.fa.fa-star');
@@ -104,6 +112,7 @@ function checkWin() {
 	}
 }
 
+// change rating according to number of moves made
 function changeRating() {
 	let star = document.querySelectorAll('i.fa.fa-star');
 	if (moveCounter === 20 || moveCounter === 30 || moveCounter === 40) {
@@ -112,8 +121,10 @@ function changeRating() {
 	};
 }
 
+// start the game
 startGame()
 
+// restore rating after a new game starts
 function restoreRating() {
 	let emptyStar = document.querySelectorAll('i.fa.fa-star-o');
 	for (var i = 0; i < emptyStar.length; i++) {
@@ -121,6 +132,8 @@ function restoreRating() {
 		emptyStar[0].classList.add('fa-star');
 	};	
 }
+
+// start new game without refreshing the browser tab
 document.querySelector("div.restart").addEventListener('click', startGame)
 
 
