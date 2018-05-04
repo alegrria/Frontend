@@ -1,11 +1,27 @@
 //Create a list that holds all of your cards
 let items = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
+// start timer for the game
+let timer;
+function timeStart() {
+    let sec = 0;
+    function pad ( val ) { return val > 9 ? val : "0" + val; }
+    timer = setInterval( function(){
+                            document.getElementById("seconds").innerHTML=pad(++sec%60);
+                            document.getElementById("minutes").innerHTML=pad(parseInt(sec/60,10));
+                            }, 1000);
+}
+
+// stop timer for the game
+function timeStop() {
+    document.getElementById("seconds").innerHTML = '';
+    document.getElementById("minutes").innerHTML = '';
+    clearInterval(timer);
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -13,7 +29,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -40,16 +55,13 @@ function startGame() {
 		cards[i].addEventListener('click', changeRating);
 		cards[i].addEventListener('click', checkWin);
 		moveCounter = 0;
-		moveCount();
-		restoreRating();
-	time()
+		moveCount()
+        restoreRating();
 	};
 }
-
 let openCards = [];
 let counter = 0;
 let moveCounter = 0
-
 let cards = document.getElementsByClassName("card")
 
 // start timer for the game
@@ -67,8 +79,10 @@ function time() {
 
 // turn the card to see its symbol
 function turnCard() {
-	var card = this.classList.add("open", "show");
-	return card;
+    if (this.classList.contains("match") === false) {
+        var card = this.classList.add("open", "show");
+        return card;
+    };
 }
 
 // add card to the list of open cards
@@ -78,7 +92,7 @@ function addCard() {
     	counter += 1;
     	moveCounter += 1;
 	} 
-}  
+}
 
 // compare cards and leave them open if the symbols match
 function addMatch() {
@@ -107,7 +121,10 @@ function removeOpen() {
 }
 
 // count the moves which are namely cliks on cards
-function moveCount() { 
+function moveCount() {
+    if (moveCounter === 1){
+        timeStart();
+    };
 	var moves = document.querySelectorAll("span.moves");
 	moves[0].innerHTML = moveCounter
 }
@@ -122,8 +139,7 @@ function checkWin() {
 		setTimeout(function() {alert(`Congratulations! You won!11 It took you ${time} and ${moveCounter} moves to win the game. Your star rating is ${star.length}. Try once more?`);
 		openCards = []}, 200);
 		moveCounter += 0;
-		clearInterval(timer);
-
+		timeStop();
 	}
 }
 
@@ -148,6 +164,6 @@ function restoreRating() {
 	};	
 }
 
-
 // start new game without refreshing the browser tab
-document.querySelector("div.restart").addEventListener('click', startGame);
+document.querySelector("div.restart").addEventListener('click', timeStop)
+document.querySelector("div.restart").addEventListener('click', startGame)

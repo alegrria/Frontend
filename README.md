@@ -2,8 +2,13 @@
 
 ## Table of Contents
 
+* [Rules](#rules)
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+
+## Rules
+This is the game, where a player clicks on two cards one by one, and if they match - they stay opened. If not - they turn over again. The rating is from 1 to 3 stars and loses one star after 20 moves and second star after 30 moves. Pressing "restart" icon restarts the game. Have fun!
+
 
 ## Instructions
 
