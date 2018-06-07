@@ -33,16 +33,16 @@ $(function() {
         });
 
         it('is hidden by default', function(){
-            expect(el.classList.contains('menu-hidden')).toBeTruthy();  
+            expect(el.classList.contains('menu-hidden')).toBe(true);  
         });
 
         it('displays and hides on click', function(){
             menuIcon = $('.menu-icon-link');
             menuIcon.trigger("click");
-            expect(el.classList.contains('menu-hidden')).toBeFalsy(); 
+            expect(el.classList.contains('menu-hidden')).toBe(false); 
 
             menuIcon.trigger("click");
-            expect(el.classList.contains('menu-hidden')).toBeTruthy(); 
+            expect(el.classList.contains('menu-hidden')).toBe(true); 
         });  
     });       
 
