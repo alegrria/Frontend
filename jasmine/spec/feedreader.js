@@ -13,16 +13,16 @@ $(function() {
         });
 
         it('have non-empty URLs', function(){
-            for (feed in allFeeds) {
-                expect(allFeeds[feed].url).toBeDefined();
-                expect(allFeeds[feed].url.length).not.toBe(0);
+            for (let feed of allFeeds) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
             }
         }); 
 
         it('have non-empty names', function(){
-            for (feed in allFeeds) {
-                expect(allFeeds[feed].name).toBeDefined();
-                expect(allFeeds[feed].name.length).not.toBe(0);
+            for (let feed of allFeeds) {
+                expect(feed.name).toBeDefined();
+                expect(feed.name.length).not.toBe(0);
             }
         }); 
     });
@@ -52,25 +52,30 @@ $(function() {
         });
 
         it('are loaded', function(done){
-            expect($('.feed')[0].children[0].classList.contains('entry-link')).toBeTruthy();
+            expect($('.feed .entry-link').length).toBeGreaterThan(0);
             done();
-        }); 
-
+        });
 
     });
 
     describe('New Feed Selection', function() { // Passes, when feed content changes upon loading another feed
-        beforeEach((done)=> {
-            loadFeed(0, function() {           
+        let firstFeed, 
+            secondFeed;
+
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                firstFeed = $('.feed').html();          
                 loadFeed(1, function() {
+                    secondFeed = $('.feed').html();
                     done(); 
-        });
-    });
-});
+                });
+            });
+        });    
 
         it('should change the content', function(done){
-            expect($('.feed')[0].children[0].href).toContain('https://www.youtube.com/watch?v=tvLF7zllsv0');
+            expect(firstFeed).not.toEqual(secondFeed);
             done();
         }); 
-    });     
-}());
+    });
+
+});
