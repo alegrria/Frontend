@@ -32,6 +32,9 @@ function shuffle(array) {
     return array;
 }
 
+// disable clicks
+let clickEnabled = true
+
 // Make the deck with cards
 function makeCard(items) {
 	let deck = []
@@ -45,7 +48,8 @@ function makeCard(items) {
 function startGame() {
     items = shuffle(items);
     turnover.innerHTML = makeCard(items);
-    for (var i = 0; i < cards.length; i++) {
+	for (var i = 0; i < cards.length; i++) {
+		if (clickEnabled) {
 		cards[i].addEventListener('click', turnCard);
 		cards[i].addEventListener('click', addCard);
 		cards[i].addEventListener('click', addMatch);
@@ -57,6 +61,7 @@ function startGame() {
 		moveCounter = 0;
 		moveCount()
         restoreRating();
+       	}; 
 	};
 }
 let openCards = [];
@@ -90,7 +95,10 @@ function addCard() {
 	if (this.classList.contains("open") && this !== openCards[0]) {
 	    openCards.push(this);
     	counter += 1;
-    	moveCounter += 1;
+    	if(openCards.length <= 2) {
+    		moveCounter += 1;
+    	};
+    	
 	} 
 }
 
@@ -98,12 +106,14 @@ function addCard() {
 function addMatch() {
 	if (counter === 2) {
 		if (openCards[0].childNodes[0].classList.value === openCards[1].childNodes[0].classList.value) {
+			clickEnabled = false
 			openCards[0].classList.remove("open", "show");
 			openCards[0].classList.add("match");
 			openCards[1].classList.remove("open", "show");
 			openCards[1].classList.add("match");
 			counter = 0;
 			openCards = [];
+			clickEnabled = true;
 		}
 	}
 }
@@ -115,12 +125,12 @@ function removeOpen() {
 			setTimeout(function() {openCards[0].classList.remove("open", "show");
 			openCards[1].classList.remove("open", "show");
 			counter = 0;
-			openCards = []}, 500);
+			openCards = []}, 1000);
 		}
 	}
 }
 
-// count the moves which are namely cliks on cards
+// count the moves which are namely clicks on cards
 function moveCount() {
     if (moveCounter === 1){
         timeStart();
