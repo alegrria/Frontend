@@ -134,7 +134,7 @@ function removeOpen() {
 			openCards[1].classList.remove("open", "show");
 			counter = 0;
 			enableClicks(cards)
-			openCards = []}, 2000);
+			openCards = []}, 700);
 		}
 		
 	}
