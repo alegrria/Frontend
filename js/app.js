@@ -32,9 +32,6 @@ function shuffle(array) {
     return array;
 }
 
-// disable clicks
-let clickEnabled = true
-
 // Make the deck with cards
 function makeCard(items) {
 	let deck = []
@@ -46,12 +43,12 @@ function makeCard(items) {
 
 // start a new game
 function startGame() {
+	openCards = [];
     items = shuffle(items);
     turnover.innerHTML = makeCard(items);
 	for (var i = 0; i < cards.length; i++) {
-		if (clickEnabled) {
 		cards[i].addEventListener('click', turnCard);
-		cards[i].addEventListener('click', addCard);
+		// cards[i].addEventListener('click', addCard);
 		cards[i].addEventListener('click', addMatch);
 		cards[i].addEventListener('click', turnCard);
 		cards[i].addEventListener('click', removeOpen);
@@ -60,14 +57,30 @@ function startGame() {
 		cards[i].addEventListener('click', checkWin);
 		moveCounter = 0;
 		moveCount()
-        restoreRating();
-       	}; 
+        restoreRating(); 
 	};
 }
 let openCards = [];
 let counter = 0;
 let moveCounter = 0
 let cards = document.getElementsByClassName("card")
+
+//disable clicks on cards
+function disableClicks(ar) {
+	for (var i = 0; i < ar.length; i++) {
+		ar[i].classList.add("disabled");
+	};
+}
+
+//disable clicks on cards
+function enableClicks(ar) {
+	for (var i = 0; i < ar.length; i++) {
+		if(ar[i].classList.contains("match") === false) {
+			ar[i].classList.remove("disabled");
+		}
+	};
+}
+
 
 // start timer for the game
 function time() {
@@ -82,23 +95,17 @@ function time() {
 	}, 1000);
 }
 
-// turn the card to see its symbol
+// turn the card to see its symbol and add card to the list of open cards
 function turnCard() {
     if (this.classList.contains("match") === false) {
-        var card = this.classList.add("open", "show");
-        return card;
-    };
-}
-
-// add card to the list of open cards
-function addCard() {
-	if (this.classList.contains("open") && this !== openCards[0]) {
-	    openCards.push(this);
-    	counter += 1;
-    	if(openCards.length <= 2) {
-    		moveCounter += 1;
+        this.classList.add("open", "show", "disabled");
+        if(this !== openCards[0]) {
+		    openCards.push(this);
+	    	counter += 1;
+	    	if(openCards.length <= 2) {
+	    		moveCounter += 1;
+    		};
     	};
-    	
 	} 
 }
 
@@ -106,28 +113,32 @@ function addCard() {
 function addMatch() {
 	if (counter === 2) {
 		if (openCards[0].childNodes[0].classList.value === openCards[1].childNodes[0].classList.value) {
-			clickEnabled = false
+			disableClicks(cards)
 			openCards[0].classList.remove("open", "show");
 			openCards[0].classList.add("match");
 			openCards[1].classList.remove("open", "show");
 			openCards[1].classList.add("match");
 			counter = 0;
 			openCards = [];
-			clickEnabled = true;
+			enableClicks(cards)
 		}
 	}
 }
 
 // empty the open list
 function removeOpen() {
-	if (counter === 2) {
+	if (openCards.length === 2) {
+		disableClicks(cards)
 		if (openCards[0].childNodes[0].classList.value !== openCards[1].childNodes[0].classList.value){
 			setTimeout(function() {openCards[0].classList.remove("open", "show");
 			openCards[1].classList.remove("open", "show");
 			counter = 0;
-			openCards = []}, 1000);
+			enableClicks(cards)
+			openCards = []}, 2000);
 		}
+		
 	}
+	
 }
 
 // count the moves which are namely clicks on cards
@@ -136,9 +147,10 @@ function moveCount() {
         timeStart();
     };
 	var moves = document.querySelectorAll("span.moves");
-	moves[0].innerHTML = moveCounter
+	if(moveCounter% 2 == 0) {
+		moves[0].innerHTML = moveCounter/2;
+	};
 }
-
 
 // check if the game is over
 function checkWin() {
@@ -146,7 +158,7 @@ function checkWin() {
 	let star = document.querySelectorAll('i.fa.fa-star');
 	let time = document.getElementById('minutes').innerHTML + " minutes " + document.getElementById('seconds').innerHTML + " seconds"
 	if (matched.length === 16) {
-		setTimeout(function() {alert(`Congratulations! You won!11 It took you ${time} and ${moveCounter} moves to win the game. Your star rating is ${star.length}. Try once more?`);
+		setTimeout(function() {alert(`Congratulations! You won!11 It took you ${time} and ${moveCounter/2} moves to win the game. Your star rating is ${star.length}. Try once more?`);
 		openCards = []}, 200);
 		moveCounter += 0;
 		timeStop();
