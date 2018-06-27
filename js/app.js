@@ -48,8 +48,8 @@ var Player = function(x, y, move) {
     this.x = 200;
     this.y = 370;
     this.move = move
-    this.moveUpOrDown = 100;
-    this.moveRightOrLeft = 80;
+    this.moveUpOrDown = 80;
+    this.moveRightOrLeft = 100;
 }
 
 Player.prototype.update = function(dt) {
@@ -64,8 +64,21 @@ Player.prototype.render = function() {
 };
 
 // Control the player with keys
-Player.prototype.handleInput = function() {
-    
+Player.prototype.handleInput = function(keyUp) {
+    switch(keyUp) {
+        case 'left':
+            this.x -= this.moveRightOrLeft;
+            break;
+        case 'right':
+            this.x += this.moveRightOrLeft;
+            break;
+        case 'up':
+            this.y -= this.moveUpOrDown;
+            break;
+        case 'down':
+            this.y += this.moveUpOrDown;
+            break;
+    }
 };
 
 // Now instantiate your objects.
@@ -94,8 +107,8 @@ initialPositions.forEach(function(position) {
 // Place the player object in a variable called player
 let player = new Player();
 
-// y <= 400 x-move = 80 (370 (initial position), 290, 210, 130, 50)
-// x <= 400 y-move = 100 (0, 100, 200(initial position), 300, 400)
+// y 370 - 50
+// x 0 - 400
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -108,5 +121,7 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+    console.log(player.x)
+    console.log(player.y)
     console.log(allowedKeys[e.keyCode])
 });
