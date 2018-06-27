@@ -9,8 +9,12 @@ var Enemy = function(x, y, move) {
     this.x = x;
     this.y = y;
     this.move = move;
+    this.length = 80;
+    this.height = 60;
 
 };
+
+
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -19,16 +23,20 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.move * dt
-    this.move = 50 + Math.floor(Math.random() * 200);
+    this.move = Math.floor(Math.random() * 100 + 10) + Math.floor(Math.random() * 200);
     
-    // reload the bug when it goes out of the canvas
+    // reload the bug when it goes out of the canvas; slightly before canvas starts to appear smoothly on the screen
     let canvasWidth = 505
     if(this.x > canvasWidth) {
         this.x = -100;
-        this.move = Math.floor(Math.random() * 100) + Math.floor(Math.random() * 200);
+        this.generateSpeed();
     };
 };
 
+// generate random speed for bugs
+Enemy.prototype.generateSpeed = function() {
+    this.move = Math.floor(Math.random() * 100) + Math.floor(Math.random() * 50 + 2);
+};
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -45,9 +53,7 @@ var Player = function() {
     this.moveUpOrDown = 100;
     this.moveRightOrLeft = 80;
 }
-Player.prototype.handleInput = function() {
-    
-}
+
 Player.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -59,6 +65,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Control the player with keys
 Player.prototype.handleInput = function() {
     
 };
