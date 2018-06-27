@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, move) {
+var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -8,7 +8,7 @@ var Enemy = function(x, y, move) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
-    this.move = move;
+    this.speed = speed;
     this.length = 80;
     this.height = 60;
 
@@ -20,8 +20,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += this.move * dt
-    this.move = Math.floor(Math.random() * 100 + 10) + Math.floor(Math.random() * 200);
+    this.x += this.speed * dt
     
     // reload the bug when it goes out of the canvas; slightly before canvas starts to appear smoothly on the screen
     let canvasWidth = 505
@@ -33,7 +32,7 @@ Enemy.prototype.update = function(dt) {
 
 // generate random speed for bugs
 Enemy.prototype.generateSpeed = function() {
-    this.move = Math.floor(Math.random() * 100) + Math.floor(Math.random() * 50 + 2);
+    this.speed = 50 + Math.floor(Math.random() * 100 + 50);
 };
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -44,10 +43,11 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function() {
+var Player = function(x, y, move) {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 370;
+    this.move = move
     this.moveUpOrDown = 100;
     this.moveRightOrLeft = 80;
 }
@@ -76,9 +76,19 @@ Player.prototype.handleInput = function() {
 let allEnemies = [];
 let initialPositions = [60, 140, 220]
 initialPositions.forEach(function(position) {
-                         let initialSpeed = Math.floor(Math.random() * 100) + Math.floor(Math.random() * 50 + 2);
-                         enemy = new Enemy(-100, position, initialSpeed);
-                         allEnemies.push(enemy);
+                         if(position === 60) {
+                             let initialSpeed = 300 + Math.floor(Math.random() * 350 + 20);
+                             let enemy = new Enemy(-50, position, initialSpeed);
+                             allEnemies.push(enemy);
+                         } if(position === 140) {
+                            let initialSpeed = 50 + Math.floor(Math.random() * 50 + 20);
+                            let enemy = new Enemy(-350, position, initialSpeed);
+                            allEnemies.push(enemy);
+                         } if(position === 220) {
+                            let initialSpeed = 100;
+                            let enemy = new Enemy(-800, position, initialSpeed);
+                            allEnemies.push(enemy);
+                         };
                          });
 
 // Place the player object in a variable called player
