@@ -64,28 +64,42 @@ Player.prototype.render = function() {
 };
 
 // Control the player with keys
-Player.prototype.handleInput = function(keyUp) {
-    switch(keyUp) {
+Player.prototype.handleInput = function(key) {
+    switch(key) {
         case 'left':
-            this.x -= this.moveRightOrLeft;
+            if(this.x === 0) {
+                return null;
+            } else {
+                this.x -= this.moveRightOrLeft;
+            };
             break;
         case 'right':
-            this.x += this.moveRightOrLeft;
+            if(this.x === 400) {
+                return null;
+            } else {
+                this.x += this.moveRightOrLeft;
+            };
             break;
         case 'up':
-            this.y -= this.moveUpOrDown;
+            if(this.y === 50) {
+                this.x = 200;
+                this.y = 370;
+            } else {
+                this.y -= this.moveUpOrDown;
+            };
             break;
         case 'down':
-            this.y += this.moveUpOrDown;
+            if(this.y === 370) {
+                return null;
+            } else {
+                this.y += this.moveUpOrDown;
+            };
             break;
-    }
+        };
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-//let enemy1 = new Enemy(0, 60, 1);
-//let enemy2 = new Enemy(0, 140, 1);
-//let enemy3 = new Enemy(0, 220, 1);
 let allEnemies = [];
 let initialPositions = [60, 140, 220]
 initialPositions.forEach(function(position) {
@@ -121,7 +135,6 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-    console.log(player.x)
-    console.log(player.y)
-    console.log(allowedKeys[e.keyCode])
+                          console.log(player.x)
+                          console.log(player.y)
 });
