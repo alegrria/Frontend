@@ -9,8 +9,8 @@ var Enemy = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.length = 80;
-    this.height = 60;
+    this.length = 70;
+    this.height = 40;
 
 };
 
@@ -30,7 +30,7 @@ Enemy.prototype.update = function(dt) {
     };
     
     // player goes back after collision with a bug
-    if(player.x < this.x + 70 && player.x + 70 > this.x && player.y < this.y + 40 && 40 + player.y > this.y) {
+    if(player.x < this.x + this.length && player.x + this.length > this.x && player.y < this.y + this.height && this.height + player.y > this.y) {
         player.x = 200;
         player.y = 370;
     };
