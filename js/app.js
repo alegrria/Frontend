@@ -28,6 +28,12 @@ Enemy.prototype.update = function(dt) {
         this.x = -100;
         this.generateSpeed();
     };
+    
+    // player goes back after collision with a bug
+    if(player.x < this.x + 70 && player.x + 70 > this.x && player.y < this.y + 40 && 40 + player.y > this.y) {
+        player.x = 200;
+        player.y = 370;
+    };
 };
 
 // generate random speed for bugs
@@ -43,20 +49,13 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x, y, move) {
+var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 370;
-    this.move = move
     this.moveUpOrDown = 80;
     this.moveRightOrLeft = 100;
 }
-
-Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-};
 
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
