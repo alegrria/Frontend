@@ -14,8 +14,6 @@ var Enemy = function(x, y, move) {
 
 };
 
-
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -72,10 +70,16 @@ Player.prototype.handleInput = function() {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-let enemy1 = new Enemy(0, 60, 1);
-let enemy2 = new Enemy(0, 140, 1);
-let enemy3 = new Enemy(0, 220, 1);
-let allEnemies = [enemy1, enemy2, enemy3];
+//let enemy1 = new Enemy(0, 60, 1);
+//let enemy2 = new Enemy(0, 140, 1);
+//let enemy3 = new Enemy(0, 220, 1);
+let allEnemies = [];
+let initialPositions = [60, 140, 220]
+initialPositions.forEach(function(position) {
+                         let initialSpeed = Math.floor(Math.random() * 100) + Math.floor(Math.random() * 50 + 2);
+                         enemy = new Enemy(-100, position, initialSpeed);
+                         allEnemies.push(enemy);
+                         });
 
 // Place the player object in a variable called player
 let player = new Player();
