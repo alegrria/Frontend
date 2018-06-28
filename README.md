@@ -1,6 +1,6 @@
 frontend-nanodegree-arcade-game
 ===============================
-##Rules##
+## Rules
 To start the game please open the file index.html in your favourite browser.
 
 You will have a Player and Enemies (Bugs). 
